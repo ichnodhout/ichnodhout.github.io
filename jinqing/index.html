@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="禁情仔仔秀儿 - 探索情感禁忌与独特个性的深度内容社区，分享真实秀儿故事，解读情感边界与心理机制。">
+    <meta name="keywords" content="禁情, 仔仔秀儿, 情感社区, 心理探索, 个性展示">
+    <title>禁情仔仔秀儿 - 独特个性与情感边界探索社区</title>
+    <style>
+        :root {
+            --primary-color: #6a0dad;
+            --secondary-color: #ff0080;
+            --bg-color: #1a1a2e;
+            --card-bg: #16213e;
+            --text-main: #ffffff;
+            --text-muted: #a0a0a0;
+            --accent-gradient: linear-gradient(135deg, #6a0dad 0%, #ff0080 100%);
+            --border-radius: 12px;
+            --spacing-unit: 1rem;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.3s ease;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Layout */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--spacing-unit);
+        }
+
+        /* Header */
+        header {
+            background-color: rgba(26, 26, 46, 0.95);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-wrapper {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 70px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        nav ul {
+            display: flex;
+            gap: 2rem;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--text-muted);
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--secondary-color);
+        }
+
+        .search-btn {
+            background: none;
+            border: 1px solid var(--text-muted);
+            color: var(--text-main);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .search-btn:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            padding: 4rem 0;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(106, 13, 173, 0.3) 0%, rgba(26, 26, 46, 0) 70%);
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--secondary-color);
+        }
+
+        .hero p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: white;
+            box-shadow: 0 4px 15px rgba(106, 13, 173, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(106, 13, 173, 0.6);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--secondary-color);
+            color: var(--secondary-color);
+        }
+
+        /* Section Styling */
+        section {
+            padding: 4rem 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding-bottom: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.8rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary-color);
+        }
+
+        /* Feature Grid */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            background-color: var(--card-bg);
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: transform 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 0, 128, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            color: var(--secondary-color);
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.5rem;
+            font-size: 1.25rem;
+        }
+
+        .feature-card p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Showcase / "Show" Section */
+        .showcase-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .show-item {
+            position: relative;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            aspect-ratio: 3/4;
+            background-color: #2a2a4a;
+            group: 'show';
+        }
+
+        .show-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+            transition: opacity 0.3s;
+        }
+        
+        .show-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            padding: 1.5rem;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .show-item:hover .show-overlay {
+            opacity: 1;
+        }
+
+        .show-tag {
+            font-size: 0.75rem;
+            background-color: var(--secondary-color);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            margin-bottom: 0.5rem;
+            display: inline-block;
+        }
+
+        .show-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+        }
+
+        .show-desc {
+            font-size: 0.85rem;
+            color: #ddd;
+            margin-top: 0.3rem;
+        }
+
+        /* Discussion / Community */
+        .discussion-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .discussion-item {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: var(--border-radius);
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+        }
+
+        .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-color: #333;
+            flex-shrink: 0;
+        }
+
+        .discussion-content h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .discussion-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meta-info {
+            font-size: 0.8rem;
+            color: #666;
+            display: flex;
+            gap: 1rem;
+        }
+
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        details {
+            background-color: var(--card-bg);
+            margin-bottom: 1rem;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+        }
+
+        summary {
+            padding: 1.5rem;
+            cursor: pointer;
+            font-weight: 600;
+            list-style: none;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        summary::-webkit-details-marker {
+            display: none;
+        }
+
+        summary::after {
+            content: '+';
+            font-size: 1.5rem;
+            color: var(--secondary-color);
+            transition: transform 0.3s;
+        }
+
+        details[open] summary::after {
+            transform: rotate(45deg);
+        }
+
+        .faq-content {
+            padding: 0 1.5rem 1.5rem;
+            color: var(--text-muted);
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0f0f1a;
+            padding: 4rem 0 2rem;
+            margin-top: 4rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 1.5rem;
+            color: white;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--secondary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            color: #555;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-wrapper {
+                flex-direction: column;
+                height: auto;
+                padding: 1rem 0;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1rem;
+                font-size: 0.9rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .discussion-item {
+                flex-direction: column;
+            }
+            
+            .avatar {
+                width: 40px;
+                height: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-wrapper">
+            <a href="#" class="logo">禁情仔仔秀儿</a>
+            <nav>
+                <ul>
+                    <li><a href="#intro" class="active">关于</a></li>
+                    <li><a href="#showcase">秀场</a></li>
+                    <li><a href="#community">讨论</a></li>
+                    <li><a href="#guide">指南</a></li>
+                </ul>
+            </nav>
+            <button class="search-btn">🔍 搜索</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="container">
+                <h1>探索<span>禁情</span>边界下的独特<span>秀儿</span>世界</h1>
+                <p>一个专注于情感禁区探索与个性独特展示的社区。在这里，我们重新定义情感表达，分享那些不被常规接纳的独特视角与故事。</p>
+                <div class="cta-group">
+                    <button class="btn btn-primary">加入社区</button>
+                    <button class="btn btn-outline">浏览秀场</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features -->
+        <section id="intro">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">核心价值</h2>
+                </div>
+                <div class="feature-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">🚫</div>
+                        <h3>情感禁区探索</h3>
+                        <p>深入探讨情感关系中的禁忌领域，分析心理机制与社会认知的冲突，提供客观理性的视角。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">✨</div>
+                        <h3>个性秀儿展示</h3>
+                        <p>为拥有独特个性、审美或生活态度的“秀儿”们提供展示平台，拒绝千篇一律，拥抱多元自我。</p>
+                    </article>
+                    <article class="feature-card">
+                        <div class="feature-icon">🤝</div>
+                        <h3>安全交流环境</h3>
+                        <p>建立严格的社区规范，确保用户在探索敏感话题时能获得尊重、保护与真实的情感共鸣。</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Showcase Section -->
+        <section id="showcase">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">精选秀场</h2>
+                    <a href="#" style="color: var(--secondary-color); font-size: 0.9rem;">查看全部 &rarr;</a>
+                </div>
+                <div class="showcase-grid">
+                    <div class="show-item">
+                        <div class="show-placeholder" style="background-image: url('https://picsum.photos/seed/dark1/300/400');">
+                            <div class="show-overlay">
+                                <span class="show-tag">情感观察</span>
+                                <div class="show-title">深渊之恋</div>
+                                <div class="show-desc">关于一段无法在阳光下存续的关系记录。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-item">
+                        <div class="show-placeholder" style="background-image: url('https://picsum.photos/seed/style2/300/400');">
+                            <div class="show-overlay">
+                                <span class="show-tag">个性展示</span>
+                                <div class="show-title">暗夜霓虹</div>
+                                <div class="show-desc">反叛常规的时尚穿搭与生活方式分享。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-item">
+                        <div class="show-placeholder" style="background-image: url('https://picsum.photos/seed/art3/300/400');">
+                            <div class="show-overlay">
+                                <span class="show-tag">艺术创作</span>
+                                <div class="show-title">禁忌图鉴</div>
+                                <div class="show-desc">通过视觉艺术解构情感禁忌的心理图谱。</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="show-item">
+                        <div class="show-placeholder" style="background-image: url('https://picsum.photos/seed/tech4/300/400');">
+                            <div class="show-overlay">
+                                <span class="show-tag">硬核科普</span>
+                                <div class="show-title">冷知识</div>
+                                <div class="show-desc">关于人类情感多样性与心理防御机制。</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Discussion -->
+        <section id="community">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">热门讨论</h2>
+                </div>
+                <div class="discussion-list">
+                    <article class="discussion-item">
+                        <div class="avatar"></div>
+                        <div class="discussion-content">
+                            <h4>如何定义“禁情”？</h4>
+                            <p>大家认为在当代社会，哪些情感状态或行为模式属于“禁情”范畴？是道德层面的绝对禁止，还是仅仅因为不符合主流价值观？</p>
+                            <div class="meta-info">
+                                <span>👤 独行者</span>
+                                <span>💬 128 回复</span>
+                                <span>🕒 2小时前</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="discussion-item">
+                        <div class="avatar"></div>
+                        <div class="discussion-content">
+                            <h4>作为“秀儿”的勇气</h4>
+                            <p>分享一个你为了坚持个性而做出的选择，哪怕当时不被理解。这种“秀儿”精神是你坚持下去的动力吗？</p>
+                            <div class="meta-info">
+                                <span>👤 逆光</span>
+                                <span>💬 356 回复</span>
+                                <span>🕒 5小时前</span>
+                            </div>
+                        </div>
+                    </article>
+                    <article class="discussion-item">
+                        <div class="avatar"></div>
+                        <div class="discussion-content">
+                            <h4>边界感的重要性</h4>
+                            <p>在探索情感禁区时，如何保持自我保护？界限在哪里？欢迎有经验的朋友分享心得。</p>
+                            <div class="meta-info">
+                                <span>👤 心理观察员</span>
+                                <span>💬 89 回复</span>
+                                <span>🕒 1天前</span>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Guide / FAQ -->
+        <section id="guide">
+            <div class="container">
+                <div class="section-header">
+                    <h2 class="section-title">社区指南</h2>
+                </div>
+                <div class="faq-container">
+                    <details>
+                        <summary>什么样的内容会被归类为“禁情”主题？</summary>
+                        <div class="faq-content">
+                            “禁情”主题涵盖广泛，包括但不限于非传统情感关系、心理防御机制、反叛行为、边缘审美以及处于社会主流价值观边缘的生活方式。只要内容不涉及违法、暴力或伤害他人，且具有探讨价值，均属于本社区讨论范畴。
+                        </div>
+                    </details>
+                    <details>
+                        <summary>如何成为“秀儿”并获得展示资格？</summary>
+                        <div class="faq-content">
+                            成为秀儿展示者无需特殊门槛，只需在社区内保持活跃，发布符合社区规范的原创内容（如图文、视频、观点文章）。我们鼓励真实与个性，拒绝过度包装与虚假宣传。
+                        </div>
+                    </details>
+                    <details>
+                        <summary>社区对用户隐私有何保护措施？</summary>
+                        <div class="faq-content">
+                            我们高度重视用户隐私。所有用户发布的内容可选择“仅自己可见”或“粉丝可见”。系统会自动屏蔽敏感个人信息，且严禁任何人通过技术手段挖掘用户隐私数据。
+                        </div>
+                    </details>
+                    <details>
+                        <summary>遇到冲突或不适内容怎么办？</summary>
+                        <div class="faq-content">
+                            如果您在社区内遇到冒犯性言论或违规内容，请立即点击该内容下方的“举报”按钮。我们的管理员团队会在24小时内进行审核处理。
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#">平台愿景</a></li>
+                        <li><a href="#">管理团队</a></li>
+                        <li><a href="#">加入我们</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>探索频道</h4>
+                    <ul>
+                        <li><a href="#">情感心理学</a></li>
+                        <li><a href="#">个性风格</a></li>
+                        <li><a href="#">边缘文化</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>帮助中心</h4>
+                    <ul>
+                        <li><a href="#">使用规则</a></li>
+                        <li><a href="#">隐私协议</a></li>
+                        <li><a href="#">联系客服</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 禁情仔仔秀儿社区. 保留所有权利. 本站内容仅供交流与探讨，请理性对待情感话题。
+            </div>
+        </div>
+    </footer>
+
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+</body>
+</html>
