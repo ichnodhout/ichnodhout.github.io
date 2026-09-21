@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人人美剧 - 全网最新美剧在线观看与资源导航</title>
+    <meta name="description" content="人人美剧致力于提供最新美剧资源、高清在线观看服务及详细剧集解析。涵盖漫威、DC、HBO、Netflix等热门美剧，包含更新日历、剧情介绍和观看指南。">
+    <meta name="keywords" content="人人美剧,在线看美剧,美剧推荐,美剧下载,美剧观看,美剧更新,美剧资源">
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #e50914;
+            --primary-hover: #b20710;
+            --bg-dark: #141414;
+            --bg-card: #1f1f1f;
+            --text-main: #ffffff;
+            --text-secondary: #b3b3b3;
+            --nav-height: 60px;
+            --container-width: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-left: 10px;
+            border-left: 4px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .section-title a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            font-weight: normal;
+        }
+
+        .section-title a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: var(--nav-height);
+            background-color: rgba(20, 20, 20, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid #333;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            height: 100%;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        nav ul {
+            display: flex;
+            gap: 25px;
+        }
+
+        nav a {
+            font-size: 0.95rem;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+
+        .search-box {
+            display: flex;
+            background: #333;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .search-box input {
+            background: transparent;
+            border: none;
+            padding: 8px 12px;
+            color: white;
+            outline: none;
+            width: 200px;
+        }
+
+        .search-box button {
+            background: var(--primary-color);
+            border: none;
+            padding: 0 15px;
+            cursor: pointer;
+            color: white;
+        }
+
+        /* Hero Section */
+        .hero {
+            margin-top: var(--nav-height);
+            height: 500px;
+            background: linear-gradient(to top, var(--bg-dark), transparent), url('https://picsum.photos/seed/hero/1920/600') no-repeat center center/cover;
+            display: flex;
+            align-items: flex-end;
+            position: relative;
+        }
+
+        .hero-content {
+            width: 100%;
+            padding: 40px 0;
+            background: linear-gradient(to top, var(--bg-dark), transparent);
+        }
+
+        .hero-card {
+            display: flex;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .hero-poster {
+            width: 300px;
+            height: 450px;
+            background-color: #333;
+            flex-shrink: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            overflow: hidden;
+        }
+
+        .hero-poster img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .hero-info {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 8px;
+            font-size: 0.8rem;
+            border-radius: 2px;
+            width: fit-content;
+            margin-bottom: 10px;
+        }
+
+        .hero-title {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            line-height: 1.2;
+        }
+
+        .hero-meta {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 20px;
+        }
+
+        .hero-desc {
+            color: #ddd;
+            margin-bottom: 30px;
+            max-width: 600px;
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 30px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 1rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        .btn-secondary {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(255,255,255,0.3);
+        }
+
+        /* Main Content Grid */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .grid-layout {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 25px;
+        }
+
+        /* Show Card */
+        .show-card {
+            background-color: var(--bg-card);
+            border-radius: 4px;
+            overflow: hidden;
+            transition: transform 0.2s, box-shadow 0.2s;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .show-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+        }
+
+        .card-poster {
+            position: relative;
+            padding-top: 150%; /* 2:3 Aspect Ratio */
+            background-color: #2a2a2a;
+        }
+
+        .card-poster img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .card-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+            opacity: 0;
+            transition: opacity 0.2s;
+            display: flex;
+            align-items: flex-end;
+            padding: 10px;
+        }
+
+        .show-card:hover .card-overlay {
+            opacity: 1;
+        }
+
+        .play-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-left: auto;
+        }
+
+        .card-info {
+            padding: 15px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: bold;
+            margin-bottom: 5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .card-meta {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 10px;
+        }
+
+        .card-tags {
+            margin-top: auto;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+
+        .tag {
+            font-size: 0.75rem;
+            padding: 2px 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .sidebar-section {
+            background: var(--bg-card);
+            padding: 20px;
+            border-radius: 4px;
+        }
+
+        .rank-list {
+            counter-reset: rank;
+        }
+
+        .rank-item {
+            display: flex;
+            align-items: center;
+            padding: 12px 0;
+            border-bottom: 1px solid #333;
+        }
+
+        .rank-item:last-child {
+            border-bottom: none;
+        }
+
+        .rank-num {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text-secondary);
+            margin-right: 15px;
+            width: 25px;
+            text-align: center;
+        }
+
+        .rank-item:nth-child(1) .rank-num { color: #ffc107; }
+        .rank-item:nth-child(2) .rank-num { color: #e0e0e0; }
+        .rank-item:nth-child(3) .rank-num { color: #cd7f32; }
+
+        .rank-info {
+            flex-grow: 1;
+        }
+
+        .rank-title {
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .rank-eps {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        /* Categories Grid */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .cat-item {
+            background: linear-gradient(135deg, #2a2a2a, #1f1f1f);
+            padding: 20px;
+            border-radius: 6px;
+            text-align: center;
+            transition: background 0.2s;
+            border: 1px solid #333;
+        }
+
+        .cat-item:hover {
+            background: linear-gradient(135deg, var(--primary-color), #b20710);
+            border-color: var(--primary-color);
+        }
+
+        .cat-icon {
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        .cat-name {
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #0a0a0a;
+            padding: 60px 0 20px;
+            margin-top: 60px;
+            border-top: 1px solid #333;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .footer-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            line-height: 1.8;
+        }
+
+        .footer-col h4 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.1rem;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid #222;
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-card {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .hero-poster {
+                width: 200px;
+                height: 300px;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .categories-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            nav ul {
+                display: none; /* Simplified for mobile */
+            }
+            
+            .search-box {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container nav-inner">
+            <a href="#" class="logo">人人<span>美剧</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页</a></li>
+                    <li><a href="#">最新更新</a></li>
+                    <li><a href="#">美剧榜单</a></li>
+                    <li><a href="#">分类导航</a></li>
+                    <li><a href="#">观看指南</a></li>
+                </ul>
+            </nav>
+            <div class="search-box">
+                <input type="text" placeholder="搜索美剧...">
+                <button>搜索</button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content container">
+                <div class="hero-card">
+                    <div class="hero-poster">
+                        <img src="https://picsum.photos/seed/hero/300/450" alt="今日推荐美剧封面">
+                    </div>
+                    <div class="hero-info">
+                        <span class="hero-tag">HBO 独播</span>
+                        <h1 class="hero-title">龙之家族：血与火</h1>
+                        <div class="hero-meta">
+                            <span>类型：奇幻 / 冒险</span> &nbsp;|&nbsp; 
+                            <span>评分：9.8分</span> &nbsp;|&nbsp; 
+                            <span>更新至 S2E08</span>
+                        </div>
+                        <p class="hero-desc">
+                            故事发生在《权力的游戏》故事线前200年。龙之家族讲述了坦格利安家族的兴衰史。在铁王座争夺战中，各大家族为了权力展开激烈的厮杀，龙与龙的咆哮再次响彻维斯特洛大陆。
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#" class="btn btn-primary">立即观看</a>
+                            <a href="#" class="btn btn-secondary">加入片单</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories -->
+        <section class="container main-content">
+            <div class="section-title">热门分类</div>
+            <div class="categories-grid">
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🎬</div>
+                    <div class="cat-name">动作冒险</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🕵️</div>
+                    <div class="cat-name">悬疑犯罪</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🧬</div>
+                    <div class="cat-name">科幻未来</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">😂</div>
+                    <div class="cat-name">喜剧生活</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">👑</div>
+                    <div class="cat-name">史诗奇幻</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🏥</div>
+                    <div class="cat-name">医疗律政</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🤖</div>
+                    <div class="cat-name">漫威宇宙</div>
+                </a>
+                <a href="#" class="cat-item">
+                    <div class="cat-icon">🧛</div>
+                    <div class="cat-name">DC 漫改</div>
+                </a>
+            </div>
+        </section>
+
+        <!-- Latest Updates Grid -->
+        <section class="container main-content">
+            <div class="section-title">
+                最新更新
+                <a href="#">查看全部 ></a>
+            </div>
+            <div class="grid-layout">
+                <!-- Card 1 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show1/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">黑袍纠察队</h3>
+                        <div class="card-meta">S4E06 · 更新于 2小时前</div>
+                        <div class="card-tags">
+                            <span class="tag">超英</span>
+                            <span class="tag">暴力</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 2 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show2/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">熊家餐馆</h3>
+                        <div class="card-meta">S3E05 · 更新于 5小时前</div>
+                        <div class="card-tags">
+                            <span class="tag">喜剧</span>
+                            <span class="tag">美食</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 3 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show3/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">绝命毒师</h3>
+                        <div class="card-meta">S5E16 · 更新于 昨天</div>
+                        <div class="card-tags">
+                            <span class="tag">犯罪</span>
+                            <span class="tag">剧情</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 4 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show4/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">风骚律师</h3>
+                        <div class="card-meta">S6E10 · 更新于 昨天</div>
+                        <div class="card-tags">
+                            <span class="tag">律政</span>
+                            <span class="tag">剧情</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 5 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show5/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">怪奇物语</h3>
+                        <div class="card-meta">S4E09 · 更新于 2天前</div>
+                        <div class="card-tags">
+                            <span class="tag">科幻</span>
+                            <span class="tag">恐怖</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card 6 -->
+                <article class="show-card">
+                    <div class="card-poster">
+                        <img src="https://picsum.photos/seed/show6/300/450" alt="剧集海报">
+                        <div class="card-overlay">
+                            <div class="play-icon">▶</div>
+                        </div>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">最后生还者</h3>
+                        <div class="card-meta">S1E01 · 更新于 3天前</div>
+                        <div class="card-tags">
+                            <span class="tag">末日</span>
+                            <span class="tag">生存</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <div class="container" style="display: flex; gap: 40px; margin-bottom: 40px;">
+            <!-- Sidebar Left -->
+            <aside class="sidebar" style="flex: 2;">
+                <div class="sidebar-section">
+                    <div class="section-title">热门推荐</div>
+                    <div class="grid-layout">
+                        <article class="show-card">
+                            <div class="card-poster">
+                                <img src="https://picsum.photos/seed/rec1/200/300" alt="剧集海报">
+                                <div class="card-overlay">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h3 class="card-title">继承之战</h3>
+                                <div class="card-meta">S4E10</div>
+                            </div>
+                        </article>
+                        <article class="show-card">
+                            <div class="card-poster">
+                                <img src="https://picsum.photos/seed/rec2/200/300" alt="剧集海报">
+                                <div class="card-overlay">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h3 class="card-title">曼达洛人</h3>
+                                <div class="card-meta">S3E08</div>
+                            </div>
+                        </article>
+                        <article class="show-card">
+                            <div class="card-poster">
+                                <img src="https://picsum.photos/seed/rec3/200/300" alt="剧集海报">
+                                <div class="card-overlay">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h3 class="card-title">王冠</h3>
+                                <div class="card-meta">S6E04</div>
+                            </div>
+                        </article>
+                        <article class="show-card">
+                            <div class="card-poster">
+                                <img src="https://picsum.photos/seed/rec4/200/300" alt="剧集海报">
+                                <div class="card-overlay">
+                                    <div class="play-icon">▶</div>
+                                </div>
+                            </div>
+                            <div class="card-info">
+                                <h3 class="card-title">继承之战</h3>
+                                <div class="card-meta">S4E10</div>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Sidebar Right -->
+            <aside class="sidebar" style="flex: 1;">
+                <div class="sidebar-section">
+                    <div class="section-title">本周榜单</div>
+                    <ul class="rank-list">
+                        <li class="rank-item">
+                            <span class="rank-num">1</span>
+                            <div class="rank-info">
+                                <div class="rank-title">黑袍纠察队</div>
+                                <div class="rank-eps">第4季第6集</div>
+                            </div>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">2</span>
+                            <div class="rank-info">
+                                <div class="rank-title">熊家餐馆</div>
+                                <div class="rank-eps">第3季第5集</div>
+                            </div>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">3</span>
+                            <div class="rank-info">
+                                <div class="rank-title">曼达洛人</div>
+                                <div class="rank-eps">第3季第8集</div>
+                            </div>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">4</span>
+                            <div class="rank-info">
+                                <div class="rank-title">最后生还者</div>
+                                <div class="rank-eps">第1季第1集</div>
+                            </div>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">5</span>
+                            <div class="rank-info">
+                                <div class="rank-title">风骚律师</div>
+                                <div class="rank-eps">第6季第10集</div>
+                            </div>
+                        </li>
+                        <li class="rank-item">
+                            <span class="rank-num">6</span>
+                            <div class="rank-info">
+                                <div class="rank-title">怪奇物语</div>
+                                <div class="rank-eps">第4季第9集</div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <div class="section-title">观看指南</div>
+                    <ul style="font-size: 0.9rem; color: var(--text-secondary);">
+                        <li style="margin-bottom: 8px;"><a href="#">如何选择观看源？</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">4K/1080P 剧集解析</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">美剧更新时间表</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#">常见播放器问题解决</a></li>
+                    </ul>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <a href="#" class="footer-logo">人人美剧</a>
+                    <p class="footer-desc">
+                        人人美剧是专业的美剧资源导航与在线观看平台。我们致力于为用户提供最新、最全、最清晰的美剧内容。无论你是漫威迷、哈利波特爱好者，还是喜欢美式律政剧的观众，这里都有你想要的精彩。
+                    </p>
+                </div>
+                <div class="footer-col">
+                    <h4>快速导航</h4>
+                    <ul>
+                        <li><a href="#">最新剧集</a></li>
+                        <li><a href="#">高分榜单</a></li>
+                        <li><a href="#">分类大全</a></li>
+                        <li><a href="#">观看帮助</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>热门分类</h4>
+                    <ul>
+                        <li><a href="#">HBO 剧集</a></li>
+                        <li><a href="#">Netflix 原创</a></li>
+                        <li><a href="#">漫威宇宙</a></li>
+                        <li><a href="#">CBS 剧集</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>关于我们</h4>
+                    <ul>
+                        <li><a href="#">网站简介</a></li>
+                        <li><a href="#">免责声明</a></li>
+                        <li><a href="#">广告合作</a></li>
+                        <li><a href="#">联系反馈</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="copyright">
+                &copy; 2023 人人美剧. All Rights Reserved. 本站仅提供资源索引，所有内容均来自互联网，仅供学习交流使用，请于下载后24小时内删除。
+            </div>
+        </div>
+    </footer>
+
+</body>
+          </html>
