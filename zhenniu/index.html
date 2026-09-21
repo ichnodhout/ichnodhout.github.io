@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="真牛 - 中国领先的短视频内容聚合平台，汇集搞笑段子、硬核科普、绝美风光及日常生活记录。发现生活中的精彩瞬间，分享你的真牛时刻。">
+    <meta name="keywords" content="真牛,短视频,搞笑视频,生活记录,知识科普">
+    <title>真牛 - 发现生活中的精彩瞬间与真牛时刻</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #ff2e4d;
+            --secondary-color: #2d3436;
+            --bg-color: #f8f9fa;
+            --card-bg: #ffffff;
+            --text-main: #333333;
+            --text-sub: #636e72;
+            --border-radius: 12px;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --max-width: 1200px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a { text-decoration: none; color: inherit; }
+        ul { list-style: none; }
+        img { display: block; max-width: 100%; height: auto; object-fit: cover; }
+
+        /* Header */
+        header {
+            background: var(--card-bg);
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--primary-color);
+            letter-spacing: -0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span { color: var(--secondary-color); }
+
+        nav ul {
+            display: flex;
+            gap: 24px;
+        }
+
+        nav a {
+            font-weight: 500;
+            color: var(--text-sub);
+            transition: color 0.3s;
+            font-size: 16px;
+        }
+
+        nav a:hover, nav a.active {
+            color: var(--primary-color);
+        }
+
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background: #f1f3f5;
+            border-radius: 20px;
+            padding: 6px 16px;
+            width: 240px;
+        }
+
+        .search-bar input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            font-size: 14px;
+            color: var(--text-main);
+        }
+
+        .search-bar button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-sub);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: var(--max-width);
+            margin: 24px auto;
+            padding: 0 20px;
+        }
+
+        .hero-banner {
+            background: linear-gradient(135deg, #ff2e4d 0%, #ff6b6b 100%);
+            border-radius: var(--border-radius);
+            padding: 48px;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+        }
+
+        .hero-banner::after {
+            content: '';
+            position: absolute;
+            right: -50px;
+            bottom: -50px;
+            width: 200px;
+            height: 200px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+        }
+
+        .hero-title {
+            font-size: 36px;
+            font-weight: 800;
+            margin-bottom: 16px;
+            line-height: 1.2;
+        }
+
+        .hero-desc {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .btn {
+            display: inline-block;
+            background: white;
+            color: var(--primary-color);
+            padding: 12px 28px;
+            border-radius: 30px;
+            font-weight: 600;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        /* Main Content */
+        main {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px 40px;
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 24px;
+        }
+
+        /* Video Grid */
+        .content-section h2 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .content-section h2::before {
+            content: '';
+            display: block;
+            width: 4px;
+            height: 20px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .video-card {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .video-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .thumbnail-wrapper {
+            position: relative;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+        }
+
+        .thumbnail-wrapper img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .duration {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .card-info {
+            padding: 16px;
+        }
+
+        .card-title {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .card-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .author {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .author-avatar {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #eee;
+        }
+
+        /* Sidebar */
+        aside {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .sidebar-widget {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            padding: 20px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .widget-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 12px;
+        }
+
+        .ranking-list li {
+            margin-bottom: 16px;
+            display: flex;
+            gap: 12px;
+            align-items: flex-start;
+        }
+
+        .rank-num {
+            font-size: 18px;
+            font-weight: 800;
+            color: #ddd;
+            width: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .rank-num.top-3 {
+            color: var(--primary-color);
+        }
+
+        .rank-content h4 {
+            font-size: 14px;
+            margin-bottom: 4px;
+            line-height: 1.3;
+        }
+
+        .rank-content span {
+            font-size: 12px;
+            color: var(--text-sub);
+        }
+
+        .tags-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .tag {
+            background: #f1f3f5;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 12px;
+            color: var(--text-sub);
+            transition: background 0.2s;
+        }
+
+        .tag:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--secondary-color);
+            color: #b2bec3;
+            padding: 40px 0;
+            margin-top: 40px;
+        }
+
+        .footer-content {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container { padding: 0 16px; }
+            nav ul { display: none; } /* Simplified for mobile */
+            .search-bar { display: none; }
+            main { grid-template-columns: 1fr; }
+            .hero-banner { padding: 32px 20px; }
+            .hero-title { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                真牛
+            </a>
+            <nav>
+                <ul>
+                    <li><a href="#" class="active">首页推荐</a></li>
+                    <li><a href="#">搞笑段子</a></li>
+                    <li><a href="#">生活记录</a></li>
+                    <li><a href="#">知识科普</a></li>
+                    <li><a href="#">影视剪辑</a></li>
+                </ul>
+            </nav>
+            <div class="search-bar">
+                <input type="text" placeholder="搜索真牛时刻...">
+                <button>🔍</button>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-banner">
+            <h1 class="hero-title">记录生活中的<br>每一个精彩瞬间</h1>
+            <p class="hero-desc">真牛是一个专注于发现、分享和传播优质短视频内容的平台。无论你是想寻找快乐、学习新知，还是记录生活，这里都有属于你的真牛时刻。</p>
+            <a href="#" class="btn">立即发布</a>
+        </div>
+    </section>
+
+    <main>
+        <section class="content-section">
+            <h2>今日热门</h2>
+            <div class="video-grid">
+                <!-- Video Card 1 -->
+                <article class="video-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://picsum.photos/seed/n1/400/225" alt="搞笑视频封面">
+                        <span class="duration">03:45</span>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">猫咪误入厨房后的反应，简直太真实了！</h3>
+                        <div class="card-meta">
+                            <div class="author">
+                                <div class="author-avatar" style="background-image: url('https://picsum.photos/seed/u1/50/50'); background-size: cover;"></div>
+                                <span>萌宠日记</span>
+                            </div>
+                            <span>2.1万次播放</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Video Card 2 -->
+                <article class="video-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://picsum.photos/seed/n2/400/225" alt="旅行视频封面">
+                        <span class="duration">12:30</span>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">深秋自驾川西，这绝美风光治愈了一切</h3>
+                        <div class="card-meta">
+                            <div class="author">
+                                <div class="author-avatar" style="background-image: url('https://picsum.photos/seed/u2/50/50'); background-size: cover;"></div>
+                                <span>旅行家阿杰</span>
+                            </div>
+                            <span>8.5万次播放</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Video Card 3 -->
+                <article class="video-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://picsum.photos/seed/n3/400/225" alt="科技视频封面">
+                        <span class="duration">08:15</span>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">30秒学会：如何用手机拍出电影感大片</h3>
+                        <div class="card-meta">
+                            <div class="author">
+                                <div class="author-avatar" style="background-image: url('https://picsum.photos/seed/u3/50/50'); background-size: cover;"></div>
+                                <span>科技生活</span>
+                            </div>
+                            <span>5.6万次播放</span>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Video Card 4 -->
+                <article class="video-card">
+                    <div class="thumbnail-wrapper">
+                        <img src="https://picsum.photos/seed/n4/400/225" alt="美食视频封面">
+                        <span class="duration">05:20</span>
+                    </div>
+                    <div class="card-info">
+                        <h3 class="card-title">深夜食堂：自制日式拉面，步骤超详细</h3>
+                        <div class="card-meta">
+                            <div class="author">
+                                <div class="author-avatar" style="background-image: url('https://picsum.photos/seed/u4/50/50'); background-size: cover;"></div>
+                                <span>大厨阿明</span>
+                            </div>
+                            <span>1.2万次播放</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </section>
+
+        <aside>
+            <div class="sidebar-widget">
+                <h3 class="widget-title">本周飙升榜</h3>
+                <ul class="ranking-list">
+                    <li>
+                        <span class="rank-num top-3">1</span>
+                        <div class="rank-content">
+                            <h4>这操作太真牛了！</h4>
+                            <span>28.5万播放</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rank-num top-3">2</span>
+                        <div class="rank-content">
+                            <h4>流浪猫的逆袭</h4>
+                            <span>22.1万播放</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rank-num top-3">3</span>
+                        <div class="rank-content">
+                            <h4>硬核科普：黑洞</h4>
+                            <span>18.9万播放</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rank-num">4</span>
+                        <div class="rank-content">
+                            <h4>手工DIY：机械臂</h4>
+                            <span>15.3万播放</span>
+                        </div>
+                    </li>
+                    <li>
+                        <span class="rank-num">5</span>
+                        <div class="rank-content">
+                            <h4>城市夜景延时摄影</h4>
+                            <span>12.0万播放</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">热门话题</h3>
+                <div class="tags-cloud">
+                    <a href="#" class="tag">#搞笑日常</a>
+                    <a href="#" class="tag">#生活小技巧</a>
+                    <a href="#" class="tag">#绝美风景</a>
+                    <a href="#" class="tag">#萌宠控</a>
+                    <a href="#" class="tag">#硬核科技</a>
+                    <a href="#" class="tag">#美食教程</a>
+                    <a href="#" class="tag">#正能量</a>
+                    <a href="#" class="tag">#旅行攻略</a>
+                </div>
+            </div>
+
+            <div class="sidebar-widget">
+                <h3 class="widget-title">关于真牛</h3>
+                <p style="font-size: 13px; color: #666; line-height: 1.6;">
+                    真牛致力于为用户提供最纯粹的短视频体验。在这里，每一个创意都值得被看见，每一个瞬间都值得被记录。加入我们，分享你的真牛时刻。
+                </p>
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <div class="footer-content">
+            <div class="logo" style="color: white;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                </svg>
+                真牛
+            </div>
+            <div class="footer-links">
+                <a href="#">关于我们</a>
+                <a href="#">用户协议</a>
+                <a href="#">隐私政策</a>
+                <a href="#">联系合作</a>
+            </div>
+            <p class="copyright">Copyright © 2023 真牛平台. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
