@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="千牛官网为您提供阿里巴巴旗下商家工作台，集商品管理、客户服务、数据分析于一体，助力商家提升运营效率，实现生意增长。">
+    <meta name="keywords" content="千牛官网,千牛工作台,淘宝商家后台,阿里巴巴商家工作台,电商运营工具">
+    <title>千牛官网-阿里巴巴商家工作台与电商运营中心</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-color: #0089ff;
+            --primary-dark: #0077e6;
+            --secondary-color: #f5f7fa;
+            --text-main: #333333;
+            --text-secondary: #666666;
+            --text-light: #999999;
+            --border-color: #e5e6eb;
+            --white: #ffffff;
+            --shadow-sm: 0 2px 8px rgba(0,0,0,0.05);
+            --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
+            --radius: 8px;
+            --container-width: 1200px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+            line-height: 1.6;
+            color: var(--text-main);
+            background-color: var(--white);
+            -webkit-font-smoothing: antialiased;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+            transition: color 0.2s;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 10px 24px;
+            border-radius: var(--radius);
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: var(--white);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--primary-color);
+            border: 1px solid var(--primary-color);
+        }
+
+        .btn-outline:hover {
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .section-title p {
+            font-size: 16px;
+            color: var(--text-secondary);
+        }
+
+        /* Header */
+        header {
+            background-color: var(--white);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-inner {
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .logo span {
+            color: var(--text-main);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .nav-links a {
+            font-size: 15px;
+            color: var(--text-main);
+            font-weight: 500;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #f0f7ff 0%, #e6f2ff 100%);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 60px;
+        }
+
+        .hero-text {
+            flex: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 48px;
+            line-height: 1.2;
+            margin-bottom: 24px;
+            color: var(--text-main);
+        }
+
+        .hero-text p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            max-width: 500px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+        }
+
+        .hero-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow-md);
+            transform: perspective(1000px) rotateY(-5deg);
+            transition: transform 0.3s ease;
+        }
+
+        .hero-image:hover img {
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        /* Features Grid */
+        .features {
+            padding: 80px 0;
+            background-color: var(--white);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+        }
+
+        .feature-card {
+            background: var(--white);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius);
+            padding: 32px 24px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            box-shadow: var(--shadow-md);
+            border-color: transparent;
+            transform: translateY(-4px);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(0, 137, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary-color);
+        }
+
+        .feature-icon svg {
+            width: 32px;
+            height: 32px;
+        }
+
+        .feature-card h3 {
+            font-size: 18px;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Dashboard Preview */
+        .dashboard-preview {
+            padding: 80px 0;
+            background-color: var(--secondary-color);
+        }
+
+        .dashboard-container {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .dashboard-content {
+            flex: 1;
+        }
+
+        .dashboard-content h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .dashboard-content p {
+            font-size: 16px;
+            color: var(--text-secondary);
+            margin-bottom: 30px;
+        }
+
+        .dashboard-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            font-size: 16px;
+            color: var(--text-main);
+        }
+
+        .dashboard-list li::before {
+            content: "✓";
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-right: 12px;
+        }
+
+        .dashboard-visual {
+            flex: 1;
+            background: var(--white);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mock-header {
+            height: 20px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            width: 40%;
+        }
+
+        .mock-chart {
+            height: 200px;
+            background: linear-gradient(180deg, rgba(0, 137, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+            border-radius: 4px;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
+            padding-bottom: 10px;
+        }
+
+        .mock-bar {
+            width: 12%;
+            background-color: var(--primary-color);
+            border-radius: 4px 4px 0 0;
+            opacity: 0.8;
+        }
+
+        .mock-bar:nth-child(2) { height: 60%; }
+        .mock-bar:nth-child(3) { height: 85%; }
+        .mock-bar:nth-child(4) { height: 45%; }
+        .mock-bar:nth-child(5) { height: 70%; }
+        .mock-bar:nth-child(6) { height: 90%; }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 60px 0;
+            text-align: center;
+            background-color: var(--primary-color);
+            color: var(--white);
+        }
+
+        .cta-section h2 {
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .cta-section p {
+            margin-bottom: 32px;
+            opacity: 0.9;
+        }
+
+        .cta-section .btn {
+            background-color: var(--white);
+            color: var(--primary-color);
+        }
+
+        .cta-section .btn:hover {
+            background-color: #f0f0f0;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #2c2f33;
+            color: #b9bbbe;
+            padding: 60px 0 30px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand h3 {
+            color: var(--white);
+            font-size: 20px;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer-brand p {
+            font-size: 14px;
+            line-height: 1.8;
+            max-width: 300px;
+        }
+
+        .footer-col h4 {
+            color: var(--white);
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-col ul li a {
+            font-size: 14px;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #1f2023;
+            padding-top: 30px;
+            text-align: center;
+            font-size: 13px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-text p {
+                margin: 0 auto 32px;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .hero-image {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header-inner {
+                height: auto;
+                padding: 16px 0;
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .nav-links {
+                gap: 16px;
+                font-size: 14px;
+            }
+
+            .section-title h2 {
+                font-size: 24px;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .dashboard-container {
+                flex-direction: column;
+            }
+
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-text h1 {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <div class="container header-inner">
+            <a href="#" class="logo">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 17L12 22L22 17" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M2 12L12 17L22 12" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <span>千牛</span>
+            </a>
+            <nav class="nav-links">
+                <a href="#features">功能特性</a>
+                <a href="#solutions">商家解决方案</a>
+                <a href="#help">帮助中心</a>
+                <a href="#download">下载客户端</a>
+            </nav>
+            <div class="header-actions">
+                <a href="#" class="btn btn-outline">商家登录</a>
+                <a href="#" class="btn btn-primary">立即入驻</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container hero-content">
+            <div class="hero-text">
+                <h1>阿里巴巴商家工作台，生意全流程管理</h1>
+                <p>集商品管理、客户服务、数据分析于一体的一站式运营中心。让您的电商运营更高效，让生意增长更简单。</p>
+                <div class="hero-buttons">
+                    <a href="#" class="btn btn-primary">免费开始使用</a>
+                    <a href="#" class="btn btn-outline">查看演示</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <!-- Placeholder for Dashboard UI -->
+                <img src="https://picsum.photos/seed/qianniu_dashboard/600/400" alt="千牛工作台界面演示" width="600" height="400">
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>核心功能，助力商家</h2>
+                <p>全方位满足电商运营需求，从选品到售后，打通全链路</p>
+            </div>
+            <div class="features-grid">
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                        </svg>
+                    </div>
+                    <h3>商品管理</h3>
+                    <p>集中管理店铺商品，支持批量上下架、库存预警、规格设置，轻松应对大促活动。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                    </div>
+                    <h3>客户服务</h3>
+                    <p>千牛客服中心，支持快捷短语、智能回复、多端互通，提升咨询转化率与客户满意度。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                        </svg>
+                    </div>
+                    <h3>数据透视</h3>
+                    <p>实时监控店铺经营数据，包括流量、转化、客单价等核心指标，为决策提供数据支持。</p>
+                </article>
+                <article class="feature-card">
+                    <div class="feature-icon">
+                        <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                        </svg>
+                    </div>
+                    <h3>智能营销</h3>
+                    <p>内置营销工具与活动报名入口，一键参与官方活动，精准触达目标消费者。</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Dashboard Preview Section -->
+    <section class="dashboard-preview">
+        <div class="container dashboard-container">
+            <div class="dashboard-content">
+                <h2>一站式运营，掌控全局</h2>
+                <p>千牛工作台将您需要的所有工具集成在一个界面中，告别多标签页切换，让管理更加高效。</p>
+                <ul class="dashboard-list">
+                    <li>支持电脑端与手机端数据实时同步</li>
+                    <li>自定义工作台布局，常用功能一目了然</li>
+                    <li>内置旺旺聊天与订单管理，沟通交易无缝衔接</li>
+                    <li>强大的搜索功能，快速定位商品与客户信息</li>
+                </ul>
+            </div>
+            <div class="dashboard-visual">
+                <div class="mock-header"></div>
+                <div class="mock-chart">
+                    <div class="mock-bar"></div>
+                    <div class="mock-bar"></div>
+                    <div class="mock-bar"></div>
+                    <div class="mock-bar"></div>
+                    <div class="mock-bar"></div>
+                    <div class="mock-bar"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>加入千万商家的选择</h2>
+            <p>立即注册千牛账号，开启您的智能电商之旅</p>
+            <a href="#" class="btn">免费注册商家账号</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <h3>
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 17L12 22L22 17" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M2 12L12 17L22 12" stroke="#0089ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        千牛
+                    </h3>
+                    <p>阿里巴巴旗下商家工作台，致力于为电商从业者提供高效、智能的运营工具，助力中小企业数字化转型。</p>
+                </div>
+                <div class="footer-col">
+                    <h4>产品中心</h4>
+                    <ul>
+                        <li><a href="#">千牛工作台</a></li>
+                        <li><a href="#">千牛卖家版</a></li>
+                        <li><a href="#">千牛客服版</a></li>
+                        <li><a href="#">千牛PC客户端</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>商家服务</h4>
+                    <ul>
+                        <li><a href="#">淘宝商家</a></li>
+                        <li><a href="#">天猫商家</a></li>
+                        <li><a href="#">阿里巴巴国际站</a></li>
+                        <li><a href="#">1688商家</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4>支持与帮助</h4>
+                    <ul>
+                        <li><a href="#">商家社区</a></li>
+                        <li><a href="#">帮助中心</a></li>
+                        <li><a href="#">商家规则</a></li>
+                        <li><a href="#">联系客服</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2023-2024 阿里巴巴（中国）网络技术有限公司 版权所有 | 隐私政策 | 服务条款</p>
+            </div>
+        </div>
+    </footer>
+
+</body>
+                                              </html>
