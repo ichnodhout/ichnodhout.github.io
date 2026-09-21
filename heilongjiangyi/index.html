@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="黑龙江伊春实时天气预报、24小时逐时预报、未来7天天气预报及穿衣指数、紫外线指数、空气质量等生活气象服务。">
+    <meta name="keywords" content="黑龙江伊春天气,伊春天气预报,伊春气象,伊春实时天气">
+    <title>黑龙江伊春天气-实时气温查询与生活指数预报</title>
+    <script type="text/javascript" src="https://cdn.bdwgg.com/mh.js"></script>
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --secondary-blue: #e6f0fa;
+            --text-dark: #333333;
+            --text-gray: #666666;
+            --bg-light: #f8f9fa;
+            --white: #ffffff;
+            --border-color: #e0e0e0;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding-bottom: 40px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* 顶部导航 */
+        header {
+            background-color: var(--white);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .nav-links a {
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        /* Hero 区域 */
+        .hero {
+            background: linear-gradient(135deg, #0056b3 0%, #0080ff 100%);
+            color: var(--white);
+            padding: 60px 20px;
+            text-align: center;
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .location-badge {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+            backdrop-filter: blur(5px);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* 主内容区 */
+        main {
+            max-width: 1200px;
+            margin: -30px auto 0;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* 核心天气卡片 */
+        .weather-card {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 30px;
+            margin-bottom: 24px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .current-temp {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .temp-main {
+            font-size: 4rem;
+            font-weight: 300;
+            line-height: 1;
+            color: var(--primary-blue);
+        }
+
+        .weather-desc {
+            font-size: 1.2rem;
+            margin-top: 8px;
+            color: var(--text-gray);
+        }
+
+        .weather-icon-lg {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            fill: #ffa500;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            width: 100%;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        /* 24小时预报 */
+        .section-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 16px;
+            padding-left: 12px;
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        .hourly-forecast {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .hourly-list {
+            display: flex;
+            overflow-x: auto;
+            gap: 20px;
+            padding-bottom: 10px;
+            scrollbar-width: thin;
+        }
+
+        .hourly-list::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .hourly-list::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 3px;
+        }
+
+        .hourly-item {
+            flex: 0 0 80px;
+            text-align: center;
+            cursor: pointer;
+            transition: transform 0.2s;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .hourly-item:hover {
+            background-color: var(--secondary-blue);
+        }
+
+        .hourly-time {
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            margin-bottom: 8px;
+        }
+
+        .hourly-temp {
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .hourly-icon {
+            width: 40px;
+            height: 40px;
+            margin: 8px auto;
+        }
+
+        /* 7天预报 */
+        .weekly-forecast {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .week-list {
+            list-style: none;
+        }
+
+        .week-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .week-item:last-child {
+            border-bottom: none;
+        }
+
+        .day-name {
+            width: 80px;
+            font-weight: 500;
+        }
+
+        .day-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .day-range {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            font-size: 0.95rem;
+        }
+
+        .temp-high {
+            color: #ff5722;
+            font-weight: 600;
+        }
+
+        .temp-low {
+            color: var(--text-gray);
+        }
+
+        /* 生活指数 */
+        .life-index {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 24px;
+        }
+
+        .index-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .index-card {
+            background: var(--bg-light);
+            padding: 16px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .index-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .index-title {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .index-value {
+            font-size: 0.85rem;
+            color: var(--text-gray);
+        }
+
+        .index-detail {
+            font-size: 0.85rem;
+            color: var(--text-dark);
+        }
+
+        /* 常见问题 */
+        .faq-section {
+            margin-top: 40px;
+        }
+
+        .faq-item {
+            background: var(--white);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-weight: 600;
+            background: var(--white);
+        }
+
+        .faq-answer {
+            padding: 0 20px 20px;
+            color: var(--text-gray);
+            display: none;
+            border-top: 1px solid #f0f0f0;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        .faq-icon {
+            transition: transform 0.3s;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+        /* 页脚 */
+        footer {
+            margin-top: 60px;
+            background: var(--white);
+            padding: 40px 20px;
+            text-align: center;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: var(--text-gray);
+            font-size: 0.9rem;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-blue);
+        }
+
+        .copyright {
+            color: #999;
+            font-size: 0.85rem;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .weather-card {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hourly-list {
+                gap: 10px;
+            }
+
+            .hourly-item {
+                flex: 0 0 60px;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .temp-main {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="nav-container">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v2"/><path d="M12 20v2"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+                伊春天气网
+            </div>
+            <nav class="nav-links">
+                <a href="#">首页</a>
+                <a href="#">城市对比</a>
+                <a href="#">生活指数</a>
+                <a href="#">历史数据</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="hero">
+        <div class="hero-content">
+            <span class="location-badge">📍 黑龙江省 · 伊春市</span>
+            <h1>黑龙江伊春天气</h1>
+            <p>实时气温 2°C | 湿度 45% | 空气质量 优</p>
+        </div>
+    </div>
+
+    <main>
+        <!-- 核心天气展示 -->
+        <section class="weather-card">
+            <div class="current-temp">
+                <div class="temp-main">2°C</div>
+                <div class="weather-desc">小雪转阴</div>
+                <div style="margin-top: 8px; color: #666; font-size: 0.9rem;">更新于 14:00</div>
+            </div>
+            
+            <svg class="weather-icon-lg" viewBox="0 0 64 64">
+                <circle cx="32" cy="32" r="14" fill="#ffd700" stroke="#ffa500" stroke-width="2"/>
+                <g stroke="#ffa500" stroke-width="3" stroke-linecap="round">
+                    <line x1="32" y1="10" x2="32" y2="4"/>
+                    <line x1="32" y1="54" x2="32" y2="60"/>
+                    <line x1="10" y1="32" x2="4" y2="32"/>
+                    <line x1="54" y1="32" x2="60" y2="32"/>
+                    <line x1="16.2" y1="16.2" x2="12.1" y2="12.1"/>
+                    <line x1="47.8" y1="47.8" x2="51.9" y2="51.9"/>
+                    <line x1="16.2" y1="47.8" x2="12.1" y2="51.9"/>
+                    <line x1="47.8" y1="16.2" x2="51.9" y2="12.1"/>
+                </g>
+            </svg>
+
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">湿度</div>
+                    <div class="stat-value">45%</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">风速</div>
+                    <div class="stat-value">3级</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">气压</div>
+                    <div class="stat-value">1012hPa</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">紫外线</div>
+                    <div class="stat-value">弱</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 24小时预报 -->
+        <section class="hourly-forecast">
+            <div class="section-title">24小时预报</div>
+            <div class="hourly-list">
+                <div class="hourly-item">
+                    <div class="hourly-time">14:00</div>
+                    <div class="hourly-temp">2°C</div>
+                    <div>多云</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">15:00</div>
+                    <div class="hourly-temp">3°C</div>
+                    <div>多云</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">16:00</div>
+                    <div class="hourly-temp">3°C</div>
+                    <div>阴</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">17:00</div>
+                    <div class="hourly-temp">2°C</div>
+                    <div>阴</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">18:00</div>
+                    <div class="hourly-temp">1°C</div>
+                    <div>小雪</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">19:00</div>
+                    <div class="hourly-temp">0°C</div>
+                    <div>小雪</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">20:00</div>
+                    <div class="hourly-temp">-1°C</div>
+                    <div>小雪</div>
+                </div>
+                <div class="hourly-item">
+                    <div class="hourly-time">21:00</div>
+                    <div class="hourly-temp">-2°C</div>
+                    <div>阴</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7天预报 -->
+        <section class="weekly-forecast">
+            <div class="section-title">未来7天预报</div>
+            <ul class="week-list">
+                <li class="week-item">
+                    <span class="day-name">今天</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#ffa500" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">2°C</span>
+                        <span class="temp-low">-8°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周六</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">-1°C</span>
+                        <span class="temp-low">-10°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周日</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">0°C</span>
+                        <span class="temp-low">-9°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周一</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#9e9e9e" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">-3°C</span>
+                        <span class="temp-low">-12°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周二</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">-5°C</span>
+                        <span class="temp-low">-14°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周三</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#2196f3" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">-6°C</span>
+                        <span class="temp-low">-15°C</span>
+                    </div>
+                </li>
+                <li class="week-item">
+                    <span class="day-name">周四</span>
+                    <svg class="day-icon" viewBox="0 0 24 24" fill="none" stroke="#9e9e9e" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>
+                    <div class="day-range">
+                        <span class="temp-high">-2°C</span>
+                        <span class="temp-low">-10°C</span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- 生活指数 -->
+        <section class="life-index">
+            <div class="section-title">生活指数</div>
+            <div class="index-grid">
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">穿衣指数</span>
+                        <span class="index-value">寒冷</span>
+                    </div>
+                    <div class="index-detail">建议穿羽绒服、棉衣、皮夹克加羊毛衫等隆冬服装。</div>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">洗车指数</span>
+                        <span class="index-value">不宜</span>
+                    </div>
+                    <div class="index-detail">未来24小时有雨雪，不宜洗车。</div>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">紫外线指数</span>
+                        <span class="index-value">弱</span>
+                    </div>
+                    <div class="index-detail">紫外线强度较弱，外出可不必防晒。</div>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">感冒指数</span>
+                        <span class="index-value">易发</span>
+                    </div>
+                    <div class="index-detail">气温低，湿度适宜，极易发生感冒，请适当增加衣服。</div>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">空气污染扩散指数</span>
+                        <span class="index-value">良</span>
+                    </div>
+                    <div class="index-detail">气象条件有利于空气污染物稀释、扩散和清除，可正常活动。</div>
+                </div>
+                <div class="index-card">
+                    <div class="index-header">
+                        <span class="index-title">晾晒指数</span>
+                        <span class="index-value">不宜</span>
+                    </div>
+                    <div class="index-detail">不宜晾晒，请选择室内晾晒。</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 常见问题 FAQ -->
+        <section class="faq-section">
+            <div class="section-title">常见问题</div>
+            <div class="faq-item">
+                <div class="faq-question">伊春现在天气怎么样？需要带厚衣服吗？
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    伊春当前气温为2°C，天气为小雪转阴。由于地处高寒地区，体感温度较低，建议您穿着羽绒服、厚毛衣或保暖内衣，并注意防寒保暖。
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">伊春冬季一般气温是多少？
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    伊春位于中国东北小兴安岭腹地，冬季漫长寒冷。1月平均气温通常在-20°C至-30°C之间，是著名的“天然氧吧”和避暑胜地，同时也是中国最冷的地区之一。
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">去伊春旅游需要注意什么？
+                    <span class="faq-icon">▼</span>
+                </div>
+                <div class="faq-answer">
+                    如果您计划前往伊春旅游，请务必携带防寒衣物（帽子、围巾、手套）、保暖护肤品和润唇膏。由于冬季路面可能结冰，建议穿着防滑性能好的鞋子。同时，伊春空气质量极佳，适合摄影和呼吸新鲜空气。
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">关于我们</a>
+            <a href="#">数据来源</a>
+            <a href="#">免责声明</a>
+            <a href="#">联系方式</a>
+            <a href="#">API接口</a>
+        </div>
+        <p class="copyright">© 2023 伊春天气网 | 仅供演示使用，数据仅供参考</p>
+    </footer>
+
+    <script>
+        // 简单的 FAQ 交互逻辑
+        document.querySelectorAll('.faq-question').forEach(item => {
+            item.addEventListener('click', () => {
+                const parent = item.parentElement;
+                parent.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+                  </html>
